@@ -21,7 +21,7 @@ tailwind.config={theme:{extend:{colors:{areia:'#F7F4EF',borda:'#E6E1D6',salvia:'
 html,body{height:100%;margin:0;background:#EDE8DF;overflow:hidden}
 #root{height:calc(100vh - env(safe-area-inset-top,0px));height:calc(100dvh - env(safe-area-inset-top,0px))}
 body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#2C3539}
-@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes up{from{opacity:0;transform:translate(var(--dx,0px),14px)}to{opacity:1;transform:none}}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 @keyframes slide{from{transform:translateY(100%)}to{transform:none}}
 @keyframes pop{0%{transform:scale(.8)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
@@ -34,12 +34,94 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#2C3539}
 .pse::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:6px solid var(--c)}
 .pse.dor{background:linear-gradient(90deg,#4FA38F 0%,#7DB35B 30%,#C9BB43 50%,#EBA53B 60%,#E0583A 80%,#B92E2E 100%)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.cardx{box-shadow:0 1px 2px rgba(44,53,57,.04),0 8px 20px -10px rgba(44,53,57,.16)}
+@keyframes ondaDrift{to{transform:translateX(-50%)}}
+.onda{animation:ondaDrift 16s linear infinite}.onda2{animation-duration:23s;animation-direction:reverse}
+@keyframes anel{from{stroke-dashoffset:var(--c)}}
+.anel{animation:anel 1.1s cubic-bezier(.2,.8,.2,1) .15s both;transition:stroke-dashoffset .6s ease}
+.anel-n{transition:stroke-dashoffset .3s linear}
+@keyframes kpi{0%{opacity:0;transform:translateY(10px) scale(.86)}60%{transform:scale(1.05)}100%{opacity:1;transform:none}}
+.kpis>*{animation:kpi .55s cubic-bezier(.2,.9,.3,1.2) .25s both}.kpis>*:nth-child(2){animation-delay:.33s}.kpis>*:nth-child(3){animation-delay:.41s}
+html.sp-play .kpis>*{animation-delay:2.05s!important}html.sp-play .kpis>*:nth-child(2){animation-delay:2.13s!important}html.sp-play .kpis>*:nth-child(3){animation-delay:2.21s!important}
+@keyframes bst{0%{opacity:1;transform:translate(0,0) rotate(0) scale(.4)}70%{opacity:1}100%{opacity:0;transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(1)}}
+.bst{position:absolute;width:8px;height:8px;border-radius:2px;animation:bst .9s cubic-bezier(.15,.7,.3,1) both}
+@keyframes dsc{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+.dsc-fim{animation:dsc .7s ease-in-out 3}
+@keyframes dscIn{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:none}}
+.dsc-in{animation:dscIn .35s cubic-bezier(.2,.8,.2,1)}
 button{-webkit-tap-highlight-color:transparent}
 .scroll-x{overflow-x:auto;scrollbar-width:none}.scroll-x::-webkit-scrollbar{display:none}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+.shake{animation:shake .4s}
+/* ===== abertura do app ===== */
+#splash{--m:min(34vmin,150px);position:fixed;inset:0;z-index:9999;overflow:hidden;cursor:pointer;color:#F7F4EF;background:linear-gradient(135deg,#52737A 0%,#3C5A60 100%);transition:opacity .5s ease,transform .6s cubic-bezier(.4,0,.2,1);animation:sp-kill .4s ease 2.6s forwards}
+#splash.out{opacity:0;transform:scale(1.04);pointer-events:none}
+@keyframes sp-kill{to{opacity:0;visibility:hidden;pointer-events:none}}
+#splash .mkw{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+#splash .mk{width:var(--m);height:var(--m);display:block;animation:sp-mk 1s cubic-bezier(.65,0,.35,1) .5s forwards}
+@keyframes sp-mk{to{transform:translateY(calc(var(--m)*-.72)) scale(.8)}}
+#splash .dt{transform-box:fill-box;transform-origin:center;animation:sp-pop .6s ease .8s}
+@keyframes sp-pop{0%,100%{transform:scale(1)}45%{transform:scale(1.6)}}
+#splash .wr{position:absolute;left:0;right:0;bottom:0;transform:translateY(105%);animation:sp-rise 1.1s cubic-bezier(.2,.8,.2,1) forwards}
+#splash .wr svg{display:block;width:200%;height:100%;animation:sp-drift 8s linear infinite}
+#splash .w1{height:38vh;animation-delay:.45s}#splash .w2{height:30vh;animation-delay:.6s}#splash .w2 svg{animation-duration:11s;animation-direction:reverse}
+#splash .w3{height:22vh;animation-delay:.75s}#splash .w3 svg{animation-duration:6.5s}
+@keyframes sp-rise{to{transform:none}}
+@keyframes sp-drift{to{transform:translateX(-50%)}}
+#splash .tx{position:absolute;left:0;right:0;top:calc(50% - var(--m)*.17);text-align:center;padding:0 24px}
+#splash .tx p{margin:0;opacity:0;transform:translateY(12px);animation:sp-up .6s cubic-bezier(.2,.8,.2,1) forwards}
+#splash .nm{font:600 clamp(26px,8vw,34px)/1.1 Fraunces,Georgia,serif;animation-delay:.95s!important}
+#splash .sb{font-size:12px;letter-spacing:.34em;margin-top:10px!important;animation-delay:1.1s!important}
+#splash .cr{font-size:12px;margin-top:6px!important;animation-name:sp-up2!important;animation-delay:1.25s!important}
+@keyframes sp-up{to{opacity:1;transform:none}}
+@keyframes sp-up2{to{opacity:.78;transform:none}}
+html.sp-play .enter>*>*{animation-delay:1.75s!important}
+html.sp-play .enter>*>*:nth-child(2){animation-delay:1.81s!important}
+html.sp-play .enter>*>*:nth-child(3){animation-delay:1.87s!important}
+html.sp-play .enter>*>*:nth-child(4){animation-delay:1.93s!important}
+html.sp-play .enter>*>*:nth-child(n+5){animation-delay:1.99s!important}
+@media (prefers-reduced-motion:reduce){#splash{display:none}}
 </style>
 </head>
 <body>
+<div id="splash" aria-hidden="true">
+  <div class="wr w1"><svg viewBox="0 0 1600 320" preserveAspectRatio="none"><path d="M0 160Q100 100 200 160T400 160T600 160T800 160T1000 160T1200 160T1400 160T1600 160V320H0Z" fill="#7A9A8B" fill-opacity=".5"/></svg></div>
+  <div class="wr w2"><svg viewBox="0 0 1600 320" preserveAspectRatio="none"><path d="M0 170Q100 230 200 170T400 170T600 170T800 170T1000 170T1200 170T1400 170T1600 170V320H0Z" fill="#5B7C99" fill-opacity=".42"/></svg></div>
+  <div class="wr w3"><svg viewBox="0 0 1600 320" preserveAspectRatio="none"><path d="M0 180Q100 130 200 180T400 180T600 180T800 180T1000 180T1200 180T1400 180T1600 180V320H0Z" fill="#D98A6C" fill-opacity=".38"/></svg></div>
+  <div class="mkw"><svg class="mk" viewBox="0 0 100 100"><circle cx="50" cy="50" r="49" fill="#7A9A8B" stroke="#fff" stroke-opacity=".28" stroke-width="2"/><rect x="43.5" y="20.5" width="13" height="59" rx="6.5" fill="#F7F4EF"/><rect x="20.5" y="43.5" width="59" height="13" rx="6.5" fill="#F7F4EF"/><circle class="dt" cx="77" cy="23" r="7.2" fill="#D98A6C"/></svg></div>
+  <div class="tx"><p class="nm">Daniel Andreis</p><p class="sb">PERSONAL 50+</p><p class="cr">CREF 047665-G/PR</p></div>
+</div>
+<script>
+(function(){
+  var s=document.getElementById('splash'),h=document.documentElement,ok=true,t1,t2;
+  try{ok=!sessionStorage.getItem('p50sp')&&!matchMedia('(prefers-reduced-motion: reduce)').matches;sessionStorage.setItem('p50sp','1');}catch(e){}
+  try{var mm=JSON.parse(localStorage.getItem('personal50_meta')||'{}');if(mm&&mm.semAbertura)ok=false;}catch(e){}
+  if(!ok){s.parentNode.removeChild(s);return;}
+  h.classList.add('sp-play');
+  function fim(cedo){
+    if(!s)return;var x=s;s=null;clearTimeout(t1);
+    x.classList.add('out');
+    if(cedo){h.classList.remove('sp-play');}else{t2=setTimeout(function(){h.classList.remove('sp-play');},800);}
+    setTimeout(function(){if(x.parentNode)x.parentNode.removeChild(x);},cedo?520:900);
+  }
+  s.addEventListener('click',function(){fim(true);});
+  s.addEventListener('touchstart',function(){fim(true);},{passive:true});
+  t1=setTimeout(function(){fim(false);},1750);
+})();
+</script>
 <div id="root"></div>
+<script>
+if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1')){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(function(){
+      var urls=performance.getEntriesByType('resource').map(function(r){return r.name;});
+      return navigator.serviceWorker.ready.then(function(r){if(r.active)r.active.postMessage({tipo:'aquecer',urls:urls});});
+    }).catch(function(){});
+  });
+  navigator.serviceWorker.addEventListener('message',function(e){if(e.data&&e.data.tipo==='nova-versao'){window.__p50Novo=true;window.dispatchEvent(new Event('p50-update'));}});
+}
+</script>
+
 <script>
 "use strict";
 const { useState, useEffect, useRef } = React;
@@ -172,18 +254,53 @@ function Faixa({ className = '', children }) {
     } };
     return React.createElement("div", { ref: r, className: 'scroll-x ' + className, onPointerDown: down, onPointerMove: move, onPointerUp: up, onPointerLeave: up, onClickCapture: clk }, children);
 }
-const Card = ({ children, className = '' }) => React.createElement("div", { className: 'bg-white border border-borda rounded-2xl p-4 ' + className }, children);
+const Card = ({ children, className = '' }) => React.createElement("div", { className: 'bg-white border border-borda rounded-2xl p-4 cardx ' + className }, children);
 const Avatar = ({ nome, s = 44 }) => React.createElement("div", { style: { width: s, height: s }, className: "rounded-full bg-salvia text-white flex items-center justify-center font-semibold shrink-0" }, iniciais(nome));
 const Local = ({ l }) => React.createElement("span", { className: "text-xs font-medium px-2.5 py-1 rounded-full bg-azul/15 text-azul" }, l);
-const Vazio = ({ t }) => React.createElement(Card, { className: "text-center text-suave py-10" }, t);
+const Vazio = ({ t }) => React.createElement(Card, { className: "text-center text-suave py-8" },
+    React.createElement("svg", { "aria-hidden": "true", width: "84", height: "54", viewBox: "0 0 84 54", className: "mx-auto mb-2" },
+        React.createElement("circle", { cx: "42", cy: "20", r: "11", fill: "#D98A6C", fillOpacity: ".75" }),
+        React.createElement("path", { d: "M0 36Q10.5 28 21 36T42 36T63 36T84 36V54H0Z", fill: "#7A9A8B", fillOpacity: ".55" }),
+        React.createElement("path", { d: "M0 44Q10.5 38 21 44T42 44T63 44T84 44V54H0Z", fill: "#48686E", fillOpacity: ".5" })),
+    t);
+/* Cabeçalho com ondas (mesma linguagem do PDF e da abertura). Ondas ficam ATRÁS do conteúdo (isolate + -z-10). */
+const ONDA_P = (y, a) => 'M0 ' + y + 'Q100 ' + (y - a) + ' 200 ' + y + 'T400 ' + y + 'T600 ' + y + 'T800 ' + y + 'T1000 ' + y + 'T1200 ' + y + 'T1400 ' + y + 'T1600 ' + y + 'V120H0Z';
+const Onda = ({ className = '', children }) => React.createElement("div", { className: 'relative isolate overflow-hidden rounded-3xl text-white ' + className, style: { background: 'linear-gradient(135deg,#52737A 0%,#3C5A60 100%)' } },
+    React.createElement("div", { "aria-hidden": "true", className: "absolute inset-0 -z-10 pointer-events-none overflow-hidden" },
+        React.createElement("div", { className: "absolute -right-8 -top-10 w-36 h-36 rounded-full", style: { background: 'radial-gradient(circle,rgba(217,138,108,.38),rgba(217,138,108,0) 70%)' } }),
+        React.createElement("svg", { className: "onda absolute left-0 bottom-0 h-20", style: { width: '200%' }, viewBox: "0 0 1600 120", preserveAspectRatio: "none" },
+            React.createElement("path", { d: ONDA_P(60, 44), fill: "#7A9A8B", fillOpacity: ".45" })),
+        React.createElement("svg", { className: "onda onda2 absolute left-0 bottom-0 h-14", style: { width: '200%' }, viewBox: "0 0 1600 120", preserveAspectRatio: "none" },
+            React.createElement("path", { d: ONDA_P(70, -40), fill: "#5B7C99", fillOpacity: ".42" }))),
+    children);
+/* Anel de progresso (SVG). ao=false: sem animação de entrada (usado no cronômetro de descanso) */
+function Anel({ v, max, s = 64, w = 7, cor = '#7A9A8B', trilho = '#E6E1D6', ao = true, children }) {
+    const r = (s - w) / 2, c = 2 * Math.PI * r, p = max > 0 ? Math.max(0, Math.min(1, v / max)) : 0;
+    return React.createElement("div", { className: "relative shrink-0", style: { width: s, height: s } },
+        React.createElement("svg", { width: s, height: s, className: "-rotate-90", "aria-hidden": "true" },
+            React.createElement("circle", { cx: s / 2, cy: s / 2, r: r, fill: "none", stroke: trilho, strokeWidth: w }),
+            React.createElement("circle", { cx: s / 2, cy: s / 2, r: r, fill: "none", stroke: cor, strokeWidth: w, strokeLinecap: "round", strokeDasharray: c, strokeDashoffset: c * (1 - p), className: ao ? 'anel' : 'anel-n', style: { '--c': c } })),
+        React.createElement("div", { className: "absolute inset-0 flex items-center justify-center" }, children));
+}
+/* Confete curto (novo recorde). Cada partícula recebe destino por variáveis CSS. */
+const BURST_COR = ['#D98A6C', '#7A9A8B', '#5B7C99', '#E3C23F', '#48686E'];
+function Burst() {
+    const ps = Array.from({ length: 16 }, (_, i) => { const a = (i / 16) * Math.PI * 2 + (i % 3) * .3, d = 46 + (i % 4) * 16; return { x: Math.round(Math.cos(a) * d * 1.5), y: Math.round(Math.sin(a) * d * .6), r: (i * 57 % 360) + 'deg', c: BURST_COR[i % 5], dl: (i % 4) * 30 }; });
+    return React.createElement("span", { "aria-hidden": "true", className: "absolute right-10 top-1/2 w-0 h-0 pointer-events-none z-10" }, ps.map((p, i) => React.createElement("i", { key: i, className: "bst", style: { '--x': p.x + 'px', '--y': p.y + 'px', '--r': p.r, background: p.c, animationDelay: p.dl + 'ms' } })));
+}
+const vib = p => { try {
+    if (lerMeta().vib !== false && navigator.vibrate)
+        navigator.vibrate(p);
+}
+catch (e) { } };
 /* ---------- INÍCIO ---------- */
-function Inicio({ alunas, abrir, backup, irFin, irCal }) {
+function Inicio({ alunas, abrir, backup, seg, irFin, irCal }) {
     const hj = hoje(), hr = new Date().getHours(), sau = hr < 12 ? 'Bom dia' : hr < 18 ? 'Boa tarde' : 'Boa noite';
     const dev = alunas.map(a => ({ a, s: statusPag(a) })).filter(x => x.s.st === 'aberto' || x.s.st === 'atrasado');
     const total = dev.reduce((t, x) => t + Number(x.a.valor), 0), atras = dev.filter(x => x.s.st === 'atrasado').length;
     const evs = eventosDia(alunas, hj).filter(e => !e.canc);
     return React.createElement("div", { className: "space-y-4" },
-        React.createElement("div", { className: "rounded-3xl bg-petroleo text-white p-5" },
+        React.createElement(Onda, { className: "p-5" },
             React.createElement("p", { className: "text-sm opacity-80" },
                 sau,
                 " \uD83D\uDC4B"),
@@ -192,7 +309,7 @@ function Inicio({ alunas, abrir, backup, irFin, irCal }) {
                 PROF.marca,
                 " \u00B7 CREF ",
                 PROF.cref),
-            React.createElement("div", { className: "grid grid-cols-3 gap-2 mt-4" },
+            React.createElement("div", { className: "kpis grid grid-cols-3 gap-2 mt-4" },
                 React.createElement("div", { className: "bg-white/15 rounded-2xl p-3" },
                     React.createElement("div", { className: "text-2xl font-bold" }, alunas.length),
                     React.createElement("div", { className: "text-xs opacity-80" }, "alunas ativas")),
@@ -202,6 +319,7 @@ function Inicio({ alunas, abrir, backup, irFin, irCal }) {
                 React.createElement("div", { className: "bg-white/15 rounded-2xl p-3" },
                     React.createElement("div", { className: "text-2xl font-bold" }, dev.length),
                     React.createElement("div", { className: "text-xs opacity-80" }, dev.length === 1 ? 'cobrança em aberto' : 'cobranças em aberto')))),
+        React.createElement(ResumoSemana, { alunas: alunas }),
         React.createElement(Card, { className: "space-y-1" },
             React.createElement("div", { className: "flex items-center justify-between" },
                 React.createElement("p", { className: "font-semibold" }, "Aulas de hoje"),
@@ -229,6 +347,7 @@ function Inicio({ alunas, abrir, backup, irFin, irCal }) {
                 React.createElement("span", { className: "flex items-center gap-2 shrink-0" },
                     React.createElement("span", { className: "text-suave text-sm" }, brl(a.valor)),
                     React.createElement(Badge2, { st: st.st, dias: st.dias })))))),
+        React.createElement(AvisoBackup, { dados: backup.dados }),
         React.createElement(Colapsa, { tit: "Iniciar aula sem hor\u00E1rio marcado", n: alunas.length },
             React.createElement(Card, { className: "space-y-1" },
                 React.createElement("div", { className: "divide-y divide-borda" }, alunas.map(a => { const u = sessOrd(a)[0]; return React.createElement("button", { key: a.id, onClick: () => abrir(a.id), className: "w-full flex items-center gap-3 py-2.5 text-left transition active:scale-[.99]" },
@@ -237,42 +356,406 @@ function Inicio({ alunas, abrir, backup, irFin, irCal }) {
                         React.createElement("p", { className: "font-medium truncate" }, a.nome),
                         React.createElement("p", { className: "text-xs text-suave" }, a.ativa ? '● Aula em andamento' : u ? 'Última aula em ' + dBR(u.data) : 'Nenhuma aula registrada')),
                     React.createElement("span", { className: "text-terra font-bold" }, "\u25B6")); })))),
-        React.createElement(Backup, { ...backup }));
+        React.createElement(Backup, { ...backup }),
+        React.createElement(Seguranca, { ...seg }),
+        React.createElement(Preferencias, null),
+        React.createElement("p", { className: "text-center text-xs text-suave pb-2" },
+            "Vers\u00E3o ",
+            APP_VERSAO,
+            " \u00B7 ",
+            APP_DATA));
 }
-/* ---------- BACKUP (exportar/importar JSON via texto) ---------- */
-function Backup({ dados, importar }) {
+/* Anéis da tela inicial: aulas da semana e mensalidades do mês */
+function ResumoSemana({ alunas }) {
+    if (!alunas.length)
+        return null;
+    const hj = hoje(), ini = segDe(hj);
+    let plan = 0, feitas = 0;
+    for (let i = 0; i < 7; i++) {
+        const dt = addDias(ini, i);
+        eventosDia(alunas, dt).filter(e => !e.canc).forEach(e => { plan++; if (feitoEm(e.aluna, dt))
+            feitas++; });
+    }
+    const cobradas = alunas.filter(a => statusPag(a).st !== 'sem'), pagas = cobradas.filter(a => statusPag(a).st === 'pago').length;
+    const falta = plan - feitas;
+    return React.createElement(Card, { className: "grid grid-cols-2 gap-3", "aria-label": "Resumo" },
+        React.createElement("div", { className: "flex flex-col items-center text-center gap-1.5", "data-anel": "aulas" },
+            React.createElement(Anel, { v: feitas, max: plan, s: 76, w: 8, cor: "#7A9A8B" },
+                React.createElement("span", { className: "font-bold text-petroleo text-lg" }, plan ? feitas + '/' + plan : '—')),
+            React.createElement("p", { className: "text-sm font-semibold" }, "Aulas da semana"),
+            React.createElement("p", { className: "text-xs text-suave" }, plan === 0 ? 'Cadastre horários no Calendário' : falta <= 0 ? 'Tudo em dia 🎉' : falta === 1 ? 'Falta 1 aula' : 'Faltam ' + falta + ' aulas')),
+        React.createElement("div", { className: "flex flex-col items-center text-center gap-1.5", "data-anel": "pagto" },
+            React.createElement(Anel, { v: pagas, max: cobradas.length, s: 76, w: 8, cor: "#D98A6C" },
+                React.createElement("span", { className: "font-bold text-petroleo text-lg" }, cobradas.length ? pagas + '/' + cobradas.length : '—')),
+            React.createElement("p", { className: "text-sm font-semibold" }, "Mensalidades do m\u00EAs"),
+            React.createElement("p", { className: "text-xs text-suave" }, cobradas.length === 0 ? 'Sem valores cadastrados' : pagas === cobradas.length ? 'Todas recebidas 🎉' : (cobradas.length - pagas) + (cobradas.length - pagas === 1 ? ' em aberto' : ' em aberto'))));
+}
+/* ---------- META: guarda à parte dos dados da aluna (PIN, último backup, avisos) ---------- */
+const META = 'personal50_meta', PREV = 'personal50_prev';
+const APP_VERSAO = '12', APP_DATA = '22/11/2026';
+const lerMeta = () => { try {
+    return JSON.parse(localStorage.getItem(META) || '{}') || {};
+}
+catch (e) {
+    return {};
+} };
+const salvaMeta = p => { try {
+    localStorage.setItem(META, JSON.stringify({ ...lerMeta(), ...p }));
+}
+catch (e) { } };
+const lerPrev = () => { try {
+    return JSON.parse(localStorage.getItem(PREV) || 'null');
+}
+catch (e) {
+    return null;
+} };
+const diasDesde = iso => { if (!iso)
+    return null; const d = Math.floor((Date.now() - new Date(iso).getTime()) / 864e5); return d < 0 ? 0 : d; };
+const nomeBackup = () => 'Backup-Personal50-' + hoje() + '.json';
+const montarBackup = dados => JSON.stringify({ ...dados, _bk: { em: new Date().toISOString(), versao: APP_VERSAO } });
+/* Entrega um arquivo: 1) folha de compartilhar do celular (opcional), 2) salvar pelo Claude, 3) download do navegador */
+async function entregarArquivo(nome, texto, tipo, usarShare) {
+    const bytes = new TextEncoder().encode(texto);
+    try {
+        if (usarShare) {
+            const f = new File([bytes], nome, { type: tipo });
+            if (navigator.canShare && navigator.canShare({ files: [f] })) {
+                await navigator.share({ files: [f], title: nome });
+                return 'share';
+            }
+        }
+    }
+    catch (e) {
+        if (e && e.name === 'AbortError')
+            return 'cancelado';
+    }
+    let dl = null;
+    try {
+        dl = window.claude && window.claude.use ? await window.claude.use('downloads') : null;
+        if (dl) {
+            await dl.save({ filename: nome, data: bytes });
+            return 'salvo';
+        }
+    }
+    catch (e) {
+        if (e && e.code === 'declined')
+            return 'cancelado';
+    }
+    if (!dl) {
+        try {
+            const u = URL.createObjectURL(new Blob([bytes], { type: tipo })), l = document.createElement('a');
+            l.href = u;
+            l.download = nome;
+            document.body.appendChild(l);
+            l.click();
+            l.remove();
+            setTimeout(() => URL.revokeObjectURL(u), 8000);
+            return 'baixado';
+        }
+        catch (e) { }
+    }
+    return 'falhou';
+}
+async function fazerBackup(dados, share) {
+    const r = await entregarArquivo(nomeBackup(), montarBackup(dados), 'application/json', share);
+    if (r === 'share' || r === 'salvo' || r === 'baixado')
+        salvaMeta({ ultBackup: new Date().toISOString() });
+    return r;
+}
+const msgBackup = r => r === 'share' ? 'Backup enviado. Confira se ficou onde você escolheu (Drive, WhatsApp...).'
+    : r === 'salvo' ? 'Backup salvo. Guarde uma cópia no Drive também.'
+        : r === 'baixado' ? 'Backup salvo na pasta Downloads. Guarde uma cópia no Drive também.'
+            : r === 'falhou' ? 'Este aparelho não deixou salvar o arquivo. Use "Copiar como texto".' : '';
+const quando = d => d === null ? 'nunca' : d === 0 ? 'hoje' : d === 1 ? 'ontem' : 'há ' + d + ' dias';
+/* Aviso na tela inicial: backup nunca feito ou velho */
+function AvisoBackup({ dados }) {
+    const [, setT] = useState(0), [m, setM] = useState('');
+    const meta = lerMeta(), d = diasDesde(meta.ultBackup), hj = hoje();
+    if (!dados.alunas.length || (meta.adiaAte && meta.adiaAte >= hj) || (d !== null && d < 7))
+        return null;
+    const salvar = async () => { const r = await fazerBackup(dados, false); setM(msgBackup(r)); setT(x => x + 1); };
+    return React.createElement(Card, { className: "border-terra/60 space-y-2" },
+        React.createElement("p", { className: "font-semibold" },
+            "\uD83D\uDCBE ",
+            d === null ? 'Você ainda não fez backup' : 'Último backup ' + quando(d)),
+        React.createElement("p", { className: "text-sm text-suave" }, "Seus dados ficam s\u00F3 neste aparelho. Se o celular for trocado ou o Chrome for limpo, tudo se perde. O backup leva poucos segundos."),
+        React.createElement("div", { className: "grid grid-cols-2 gap-2" },
+            React.createElement("button", { onClick: salvar, className: "py-3 rounded-xl bg-petroleo text-white font-semibold transition active:scale-95" }, "Salvar agora"),
+            React.createElement("button", { onClick: () => { salvaMeta({ adiaAte: hj }); setT(x => x + 1); }, className: "py-3 rounded-xl border border-borda bg-white text-suave font-semibold transition active:scale-95" }, "Lembrar amanh\u00E3")),
+        m && React.createElement("p", { className: "text-sm text-petroleo" }, m));
+}
+/* ---------- BACKUP: arquivo, texto, restaurar com conferência e desfazer ---------- */
+function Backup({ dados, importar, desfazer }) {
     const [aberto, setAberto] = useState(false);
-    const [txt, setTxt] = useState('');
-    const [msg, setMsg] = useState('');
-    const json = JSON.stringify(dados);
+    const [txt, setTxt] = useState(''), [msg, setMsg] = useState(''), [ver, setVer] = useState(null), [colar, setColar] = useState(false), [, setT] = useState(0);
+    const meta = lerMeta(), dias = diasDesde(meta.ultBackup), prev = lerPrev();
+    const salvarArq = async (share) => { const r = await fazerBackup(dados, share); setMsg(msgBackup(r)); setT(x => x + 1); };
     const copiar = async () => { try {
-        await navigator.clipboard.writeText(json);
-        setMsg('Backup copiado. Cole em um lugar seguro (ex.: notas ou Drive).');
+        await navigator.clipboard.writeText(montarBackup(dados));
+        salvaMeta({ ultBackup: new Date().toISOString() });
+        setT(x => x + 1);
+        setMsg('Backup copiado. Cole em um lugar seguro (notas ou Drive).');
     }
     catch (e) {
-        setMsg('Não deu para copiar. Selecione o texto e copie manualmente.');
+        setMsg('Não deu para copiar. Use "Salvar backup em arquivo".');
     } };
-    const aplicar = () => { try {
-        const d = JSON.parse(txt);
-        if (!d.alunas)
+    const ler = texto => { try {
+        const d = JSON.parse(texto);
+        if (!d || !Array.isArray(d.alunas))
             throw 0;
-        importar(d);
-        setMsg('Backup importado.');
-        setTxt('');
+        setVer(d);
+        setMsg('');
     }
     catch (e) {
-        setMsg('Texto inválido. Cole o backup completo.');
+        setMsg('Isso não parece um backup do app. Escolha o arquivo ou cole o texto completo.');
     } };
-    return React.createElement(Card, null,
-        React.createElement("button", { onClick: () => setAberto(!aberto), className: "w-full text-left font-semibold" },
+    const arq = async (e) => { const f = e.target.files && e.target.files[0]; e.target.value = ''; if (!f)
+        return; try {
+        ler(await f.text());
+    }
+    catch (x) {
+        setMsg('Não consegui ler o arquivo.');
+    } };
+    const nSess = d => d.alunas.reduce((t, a) => t + ((a.sessoes || []).length), 0);
+    const quandoBk = d => d._bk && d._bk.em ? new Date(d._bk.em).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'data desconhecida';
+    const protegido = meta.persist === true, compartilha = typeof navigator !== 'undefined' && !!navigator.share;
+    return React.createElement(Card, { className: "space-y-2" },
+        React.createElement("button", { onClick: () => setAberto(!aberto), "aria-expanded": aberto, className: "w-full text-left font-semibold" },
             "Backup dos dados ",
             aberto ? '▴' : '▾'),
-        React.createElement("p", { className: "text-xs text-suave mt-1" }, "Os dados ficam s\u00F3 neste aparelho. Fa\u00E7a backup com frequ\u00EAncia."),
-        aberto && React.createElement("div", { className: "mt-3 space-y-2" },
-            React.createElement("button", { onClick: copiar, className: "w-full py-3 rounded-xl bg-petroleo text-white font-semibold" }, "Copiar backup"),
-            React.createElement("textarea", { value: txt, onChange: e => setTxt(e.target.value), placeholder: "Para restaurar, cole aqui o backup", rows: 3, className: "w-full border border-borda rounded-xl p-2 text-sm" }),
-            React.createElement("button", { onClick: aplicar, disabled: !txt, className: "w-full py-3 rounded-xl bg-salvia text-white font-semibold disabled:opacity-40" }, "Restaurar backup"),
-            msg && React.createElement("p", { className: "text-sm text-petroleo" }, msg)));
+        React.createElement("p", { className: 'text-xs ' + (dias === null || dias >= 7 ? 'text-[#A9573A] font-semibold' : 'text-suave') },
+            "\u00DAltimo backup: ",
+            quando(dias),
+            ". Os dados ficam s\u00F3 neste aparelho."),
+        aberto && React.createElement("div", { className: "space-y-2 pt-1" },
+            React.createElement("button", { onClick: () => salvarArq(false), className: "w-full py-3 rounded-xl bg-petroleo text-white font-semibold transition active:scale-95" }, "Salvar backup em arquivo"),
+            compartilha && React.createElement("button", { onClick: () => salvarArq(true), className: "w-full py-3 rounded-xl border border-petroleo text-petroleo font-semibold transition active:scale-95" }, "Enviar para o Drive ou WhatsApp"),
+            React.createElement("button", { onClick: copiar, className: "w-full py-2.5 rounded-xl border border-borda bg-white text-suave font-semibold transition active:scale-95" }, "Copiar como texto"),
+            React.createElement("div", { className: "border-t border-borda pt-3 space-y-2" },
+                React.createElement("p", { className: "text-sm font-semibold" }, "Restaurar um backup"),
+                React.createElement("label", { className: "block w-full py-3 rounded-xl bg-salvia text-white font-semibold text-center cursor-pointer transition active:scale-95" },
+                    "Escolher arquivo de backup",
+                    React.createElement("input", { type: "file", accept: ".json,.txt,application/json,text/plain", onChange: arq, "aria-label": "Escolher arquivo de backup", className: "sr-only" })),
+                React.createElement("button", { onClick: () => setColar(!colar), className: "text-xs text-suave underline" }, colar ? 'Esconder' : 'Ou colar o texto do backup'),
+                colar && React.createElement(React.Fragment, null,
+                    React.createElement("textarea", { value: txt, onChange: e => setTxt(e.target.value), placeholder: "Cole aqui o backup", rows: 3, className: "w-full border border-borda rounded-xl p-2 text-sm" }),
+                    React.createElement("button", { onClick: () => ler(txt), disabled: !txt, className: "w-full py-2.5 rounded-xl bg-salvia text-white font-semibold disabled:opacity-40" }, "Conferir texto"))),
+            prev && prev.dados && React.createElement("button", { onClick: () => { desfazer(); setMsg('Restauração desfeita: os dados de antes voltaram.'); setT(x => x + 1); }, className: "w-full py-2.5 rounded-xl border border-terra text-[#A9573A] font-semibold" }, "Desfazer a \u00FAltima restaura\u00E7\u00E3o"),
+            msg && React.createElement("p", { className: "text-sm text-petroleo", role: "status" }, msg),
+            React.createElement("p", { className: "text-xs text-suave" }, 'storage' in navigator && navigator.storage && navigator.storage.persist ? (protegido ? 'Proteção contra limpeza automática do Chrome: ativada.' : 'Proteção contra limpeza automática do Chrome: não garantida. Instalar o app na tela inicial ajuda.') : '')),
+        ver && React.createElement(Folha, { tit: "Restaurar este backup?", fechar: () => setVer(null) },
+            React.createElement(Card, { className: "text-sm space-y-1" },
+                React.createElement("p", null,
+                    "Backup de ",
+                    React.createElement("b", null, quandoBk(ver))),
+                React.createElement("p", null,
+                    ver.alunas.length,
+                    " ",
+                    ver.alunas.length === 1 ? 'aluna' : 'alunas',
+                    " \u00B7 ",
+                    nSess(ver),
+                    " ",
+                    nSess(ver) === 1 ? 'sessão' : 'sessões')),
+            React.createElement("p", { className: "text-sm text-suave" },
+                "Isso troca tudo o que est\u00E1 neste aparelho agora (",
+                dados.alunas.length,
+                " ",
+                dados.alunas.length === 1 ? 'aluna' : 'alunas',
+                "). Antes de trocar, o app guarda uma c\u00F3pia dos dados atuais, e voc\u00EA pode desfazer depois."),
+            React.createElement("div", { className: "grid grid-cols-2 gap-2" },
+                React.createElement("button", { onClick: () => setVer(null), className: "py-3 rounded-xl border border-borda bg-white font-semibold" }, "Cancelar"),
+                React.createElement("button", { onClick: () => { importar(ver); setVer(null); setTxt(''); setColar(false); setMsg('Backup restaurado.'); setT(x => x + 1); }, className: "py-3 rounded-xl bg-terra text-white font-semibold" }, "Restaurar"))));
+}
+/* ---------- PIN: tranca a tela (não criptografa os dados) ---------- */
+const novoSalt = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+async function hashPin(pin, salt) {
+    const s = salt + ':' + pin;
+    try {
+        const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+        return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
+    }
+    catch (e) {
+        let h = 5381;
+        for (let i = 0; i < s.length; i++)
+            h = ((h << 5) + h + s.charCodeAt(i)) >>> 0;
+        return 'f' + h.toString(16);
+    }
+}
+function Teclado({ n, v, dig, apagar, erro }) {
+    const ref = useRef();
+    ref.current = { dig, apagar };
+    useEffect(() => { const f = e => { if (/^\d$/.test(e.key))
+        ref.current.dig(e.key);
+    else if (e.key === 'Backspace')
+        ref.current.apagar(); }; window.addEventListener('keydown', f); return () => window.removeEventListener('keydown', f); }, []);
+    const K = ({ t, onClick, l }) => React.createElement("button", { type: "button", onClick: onClick, "aria-label": l || t, className: "h-16 rounded-2xl bg-white/15 text-white text-2xl font-semibold transition active:scale-90 active:bg-white/30" }, t);
+    return React.createElement("div", { className: "w-full max-w-[18rem] mx-auto" },
+        React.createElement("div", { className: 'flex justify-center gap-4 my-6 ' + (erro ? 'shake' : ''), "aria-label": v.length + ' de ' + n + ' dígitos' }, Array.from({ length: n }, (_, i) => React.createElement("span", { key: i, className: 'w-3.5 h-3.5 rounded-full border-2 border-white/80 transition ' + (i < v.length ? 'bg-terra border-terra scale-110' : 'bg-transparent') }))),
+        React.createElement("div", { className: "grid grid-cols-3 gap-3" },
+            ['1', '2', '3', '4', '5', '6', '7', '8', '9'].map(d => React.createElement(K, { key: d, t: d, onClick: () => dig(d) })),
+            React.createElement("span", null),
+            React.createElement(K, { t: "0", onClick: () => dig('0') }),
+            React.createElement(K, { t: "\u232B", l: "Apagar", onClick: apagar })));
+}
+function Trava({ pin, ok }) {
+    const [v, setV] = useState(''), [err, setErr] = useState(false), [falhas, setFalhas] = useState(0), [ate, setAte] = useState(0), [agora, setAgora] = useState(Date.now()), [esq, setEsq] = useState(0);
+    const vr = useRef('');
+    const put = x => { vr.current = x; setV(x); };
+    useEffect(() => { if (!ate)
+        return; const t = setInterval(() => setAgora(Date.now()), 500); return () => clearInterval(t); }, [ate]);
+    const bloq = ate > agora ? Math.ceil((ate - agora) / 1000) : 0;
+    const dig = async (d) => {
+        if (bloq || err)
+            return;
+        const nv = (vr.current + d).slice(0, pin.n);
+        put(nv);
+        if (nv.length < pin.n)
+            return;
+        const h = await hashPin(nv, pin.s);
+        if (h === pin.h) {
+            ok();
+            return;
+        }
+        const f = falhas + 1;
+        setFalhas(f);
+        setErr(true);
+        if (f >= 5) {
+            const a = Date.now() + 30000 * Math.min(f - 4, 6);
+            setAte(a);
+            setAgora(Date.now());
+        }
+        setTimeout(() => { put(''); setErr(false); }, 450);
+    };
+    const apagar = () => { if (!err)
+        put(vr.current.slice(0, -1)); };
+    const apagarTudo = () => { try {
+        localStorage.removeItem(KEY);
+        localStorage.removeItem(PREV);
+        salvaMeta({ pin: null, ultBackup: null });
+    }
+    catch (e) { } location.reload(); };
+    return React.createElement("div", { className: "fixed inset-0 z-[90] flex flex-col items-center justify-center px-6 text-white fade", style: { background: 'linear-gradient(160deg,#4F7077,#3C5A60 60%,#2C3539)' }, role: "dialog", "aria-label": "App bloqueado" },
+        React.createElement("p", { className: "font-display text-2xl font-bold" }, PROF.nome),
+        React.createElement("p", { className: "text-sm opacity-80 mt-1" }, bloq ? 'Muitas tentativas. Tente de novo em ' + bloq + ' s.' : err ? 'PIN incorreto' : 'Digite o seu PIN'),
+        React.createElement(Teclado, { n: pin.n, v: v, dig: dig, apagar: apagar, erro: err }),
+        !esq ? React.createElement("button", { onClick: () => setEsq(1), className: "mt-8 text-sm underline opacity-80" }, "Esqueci o PIN")
+            : React.createElement("div", { className: "mt-6 max-w-xs text-sm bg-black/25 rounded-2xl p-4 space-y-3" },
+                React.createElement("p", null, "Sem o PIN, a \u00FAnica sa\u00EDda \u00E9 apagar os dados deste aparelho e restaurar um backup. O PIN s\u00F3 tranca a tela. Se voc\u00EA n\u00E3o tem backup, os dados ser\u00E3o perdidos."),
+                esq === 1 ? React.createElement("div", { className: "grid grid-cols-2 gap-2" },
+                    React.createElement("button", { onClick: () => setEsq(0), className: "py-2.5 rounded-xl bg-white/20 font-semibold" }, "Voltar"),
+                    React.createElement("button", { onClick: () => setEsq(2), className: "py-2.5 rounded-xl bg-terra font-semibold" }, "Apagar tudo"))
+                    : React.createElement("div", { className: "space-y-2" },
+                        React.createElement("p", { className: "font-semibold" }, "Tem certeza? Isso n\u00E3o pode ser desfeito."),
+                        React.createElement("div", { className: "grid grid-cols-2 gap-2" },
+                            React.createElement("button", { onClick: () => setEsq(0), className: "py-2.5 rounded-xl bg-white/20 font-semibold" }, "Cancelar"),
+                            React.createElement("button", { onClick: apagarTudo, className: "py-2.5 rounded-xl bg-[#C0452D] font-semibold" }, "Sim, apagar")))));
+}
+function PinFlow({ modo, pin, fechar, feito }) {
+    const [passo, setPasso] = useState(modo === 'ativar' ? 'n' : 'atual');
+    const [n, setN] = useState(pin ? pin.n : 4), [v, setVv] = useState(''), [novo, setNovo] = useState(''), [err, setErr] = useState('');
+    const vr = useRef('');
+    const put = x => { vr.current = x; setVv(x); };
+    const len = passo === 'atual' ? (pin ? pin.n : n) : n;
+    const dig = async (d) => {
+        if (passo === 'n')
+            return;
+        const nv = (vr.current + d).slice(0, len);
+        put(nv);
+        setErr('');
+        if (nv.length < len)
+            return;
+        if (passo === 'atual') {
+            if (await hashPin(nv, pin.s) === pin.h) {
+                if (modo === 'desligar') {
+                    salvaMeta({ pin: null });
+                    feito('PIN desligado.');
+                    return;
+                }
+                put('');
+                setPasso('n');
+            }
+            else {
+                setErr('PIN incorreto.');
+                put('');
+            }
+        }
+        else if (passo === 'novo') {
+            setNovo(nv);
+            put('');
+            setPasso('confirma');
+        }
+        else {
+            if (nv === novo) {
+                const s = novoSalt(), h = await hashPin(nv, s);
+                salvaMeta({ pin: { s, h, n } });
+                feito(modo === 'ativar' ? 'PIN ativado. Ele será pedido ao abrir o app.' : 'PIN alterado.');
+            }
+            else {
+                setErr('Os dois PINs não são iguais. Vamos de novo.');
+                setNovo('');
+                put('');
+                setPasso('novo');
+            }
+        }
+    };
+    const apagar = () => put(vr.current.slice(0, -1));
+    const tit = modo === 'ativar' ? 'Ativar PIN' : modo === 'alterar' ? 'Alterar PIN' : 'Desligar PIN';
+    const txt = { atual: 'Digite o PIN atual', n: 'Quantos dígitos?', novo: 'Digite o novo PIN', confirma: 'Digite de novo para confirmar' }[passo];
+    return React.createElement(Folha, { tit: tit, fechar: fechar },
+        React.createElement("div", { className: "rounded-2xl p-4 text-white text-center", style: { background: 'linear-gradient(160deg,#4F7077,#3C5A60)' } },
+            React.createElement("p", { className: "font-semibold" }, txt),
+            passo === 'n' ? React.createElement("div", { className: "flex justify-center gap-3 my-5" }, [4, 6].map(k => React.createElement("button", { key: k, onClick: () => { setN(k); setPasso('novo'); put(''); }, className: 'px-6 py-3 rounded-2xl font-semibold border transition active:scale-95 ' + (n === k ? 'bg-white text-petroleo border-white' : 'border-white/60') },
+                k,
+                " d\u00EDgitos")))
+                : React.createElement(Teclado, { n: len, v: v, dig: dig, apagar: apagar, erro: !!err }),
+            err && React.createElement("p", { className: "text-sm mt-2 text-[#FFD9C9]", role: "alert" }, err)));
+}
+function Seguranca({ pin, mudou }) {
+    const [fluxo, setFluxo] = useState(null), [msg, setMsg] = useState('');
+    return React.createElement(Card, { className: "space-y-2" },
+        React.createElement("div", { className: "flex items-center justify-between" },
+            React.createElement("p", { className: "font-semibold" }, "Bloqueio por PIN"),
+            React.createElement("span", { className: 'text-xs font-semibold px-2.5 py-1 rounded-full ' + (pin ? 'bg-salvia/20 text-petroleo' : 'bg-areia text-suave border border-borda') }, pin ? 'Ligado · ' + pin.n + ' dígitos' : 'Desligado')),
+        React.createElement("p", { className: "text-xs text-suave" }, "Tranca a tela ao abrir o app e depois de 2 minutos fora dele. Serve contra curiosos; n\u00E3o criptografa os dados. Se esquecer o PIN, ser\u00E1 preciso apagar os dados e restaurar um backup."),
+        React.createElement("div", { className: 'grid gap-2 ' + (pin ? 'grid-cols-2' : 'grid-cols-1') }, !pin ? React.createElement("button", { onClick: () => setFluxo('ativar'), className: "py-3 rounded-xl bg-petroleo text-white font-semibold transition active:scale-95" }, "Ativar PIN")
+            : React.createElement(React.Fragment, null,
+                React.createElement("button", { onClick: () => setFluxo('alterar'), className: "py-3 rounded-xl border border-petroleo text-petroleo font-semibold transition active:scale-95" }, "Alterar PIN"),
+                React.createElement("button", { onClick: () => setFluxo('desligar'), className: "py-3 rounded-xl border border-borda bg-white text-suave font-semibold transition active:scale-95" }, "Desligar PIN"))),
+        msg && React.createElement("p", { className: "text-sm text-petroleo", role: "status" }, msg),
+        fluxo && React.createElement(PinFlow, { modo: fluxo, pin: pin, fechar: () => setFluxo(null), feito: m => { setFluxo(null); setMsg(m); mudou(); } }));
+}
+/* Preferências de movimento e avisos (guardadas no meta) */
+const Chave = ({ on, set, t, d }) => React.createElement("button", { type: "button", role: "switch", "aria-checked": on, onClick: () => set(!on), className: "w-full flex items-center gap-3 py-2.5 text-left" },
+    React.createElement("span", { className: "flex-1 min-w-0" },
+        React.createElement("span", { className: "block font-medium" }, t),
+        d && React.createElement("span", { className: "block text-xs text-suave" }, d)),
+    React.createElement("span", { className: 'relative shrink-0 w-12 h-7 rounded-full transition-colors duration-300 ' + (on ? 'bg-salvia' : 'bg-borda') },
+        React.createElement("span", { className: 'absolute top-0.5 left-0.5 w-6 h-6 rounded-full bg-white shadow transition-transform duration-300 ' + (on ? 'translate-x-5' : '') })));
+function Preferencias() {
+    const [m, setM] = useState(lerMeta);
+    const mud = p => { salvaMeta(p); setM(lerMeta()); };
+    const pad = Number(m.descPadrao) || 0;
+    return React.createElement(Card, { className: "space-y-1" },
+        React.createElement("p", { className: "font-semibold" }, "Prefer\u00EAncias"),
+        React.createElement("div", { className: "divide-y divide-borda" },
+            React.createElement(Chave, { on: m.semTimer !== true, set: v => mud({ semTimer: !v }), t: "Timer de descanso", d: "Ao marcar uma s\u00E9rie, conta o intervalo do exerc\u00EDcio." }),
+            React.createElement(Chave, { on: m.vib !== false, set: v => { mud({ vib: v }); if (v)
+                    try {
+                        navigator.vibrate && navigator.vibrate(40);
+                    }
+                    catch (e) { } }, t: "Vibra\u00E7\u00E3o", d: "Avisa no fim do descanso e ao bater um recorde." }),
+            React.createElement(Chave, { on: m.semAbertura !== true, set: v => mud({ semAbertura: !v }), t: "Anima\u00E7\u00E3o de abertura", d: "Vale na pr\u00F3xima vez que o app abrir." })),
+        React.createElement("div", { className: "pt-2" },
+            React.createElement("p", { className: "text-sm font-medium" }, "Descanso padr\u00E3o"),
+            React.createElement("p", { className: "text-xs text-suave mb-2" }, "Usado quando o exerc\u00EDcio n\u00E3o tem intervalo preenchido."),
+            React.createElement("div", { className: "flex gap-2 flex-wrap" }, [[0, 'Nenhum'], [30, '30 s'], [45, '45 s'], [60, '60 s'], [90, '90 s']].map(([v, t]) => React.createElement(Pilula, { key: v, on: pad === v, onClick: () => mud({ descPadrao: v }) }, t)))));
+}
+/* Aviso de versão nova (o sw.js avisa quando o index.html no GitHub mudou) */
+function AvisoVersao({ fechar }) {
+    return React.createElement("div", { className: "absolute left-3 right-3 bottom-20 lg:left-auto lg:right-6 lg:bottom-6 lg:w-96 z-[60] rounded-2xl bg-carvao text-white p-3 flex items-center gap-3 shadow-xl sheet", role: "status" },
+        React.createElement("p", { className: "flex-1 text-sm" }, "H\u00E1 uma vers\u00E3o nova do app."),
+        React.createElement("button", { onClick: () => location.reload(), className: "px-4 py-2 rounded-xl bg-terra font-semibold text-sm" }, "Atualizar"),
+        React.createElement("button", { onClick: fechar, "aria-label": "Dispensar", className: "px-2 text-white/70" }, "\u2715"));
 }
 /* ---------- LISTA DE ALUNAS ---------- */
 function Alunas({ alunas, abrir, nova }) {
@@ -433,8 +916,52 @@ function melhor(a, nome, reps, excl) { let b = null; if (!(n(reps) > 0))
     return null; (a.sessoes || []).forEach(s => { if (s.id === excl)
     return; s.exs.forEach(e => { if (e.nome === nome && potOk(e) && n(e.pot.reps) === n(reps) && (b === null || n(e.pot.seg) < b))
     b = n(e.pot.seg); }); }); return b; }
+/* Converte o texto do intervalo ("60 s", "1 min", "1:30", "45-60 s", "2") em segundos. null = não entendi. */
+function intervaloSeg(t) {
+    const x = String(t || '').toLowerCase().replace(',', '.').trim();
+    if (!x)
+        return null;
+    let m = x.match(/(\d+):(\d{1,2})/);
+    if (m) {
+        const v = +m[1] * 60 + +m[2];
+        return v > 0 && v <= 1200 ? v : null;
+    }
+    m = x.match(/(\d+(?:\.\d+)?)\s*(?:min[a-z]*|')\s*(?:e\s*)?(\d+)?/);
+    if (m) {
+        const v = Math.round(parseFloat(m[1]) * 60 + (m[2] ? +m[2] : 0));
+        return v > 0 && v <= 1200 ? v : null;
+    }
+    const nums = (x.match(/\d+(?:\.\d+)?/g) || []).map(Number);
+    if (!nums.length)
+        return null;
+    const mx = Math.max(...nums), v = Math.round(/seg|\d\s*s\b|"/.test(x) || mx >= 10 ? mx : mx * 60);
+    return v > 0 && v <= 1200 ? v : null;
+}
+const mmss = sg => Math.floor(sg / 60) + ':' + String(sg % 60).padStart(2, '0');
+/* Timer de descanso: flutua no rodapé da aula. Usa relógio (Date), então não "atrasa" se a tela apagar. */
+function Descanso({ d, mais, pular }) {
+    const [ag, setAg] = useState(Date.now()), avis = useRef(false);
+    useEffect(() => { const t = setInterval(() => setAg(Date.now()), 250); return () => clearInterval(t); }, []);
+    const falta = Math.max(0, Math.ceil((d.fim - ag) / 1000)), fim = ag >= d.fim;
+    useEffect(() => { if (fim && !avis.current) {
+        avis.current = true;
+        vib([220, 110, 220, 110, 420]);
+    } }, [fim]);
+    useEffect(() => { if (!fim)
+        avis.current = false; }, [fim]);
+    useEffect(() => { if (ag >= d.fim + 7000)
+        pular(); }, [ag, d.fim]);
+    return React.createElement("div", { role: "timer", "aria-label": "Descanso", className: 'dsc-in sticky bottom-3 z-10 rounded-2xl text-white p-2.5 pr-3 flex items-center gap-3 shadow-xl ' + (fim ? 'bg-terra dsc-fim' : 'bg-carvao') },
+        React.createElement(Anel, { v: falta, max: d.total, s: 48, w: 5, cor: fim ? '#fff' : '#D98A6C', trilho: "rgba(255,255,255,.22)", ao: false },
+            React.createElement("span", { className: "text-xs font-bold tabular-nums" }, fim ? '✓' : mmss(falta))),
+        React.createElement("div", { className: "flex-1 min-w-0" },
+            React.createElement("p", { className: "text-sm font-semibold leading-tight" }, fim ? 'Pode fazer a próxima série' : 'Descansando'),
+            React.createElement("p", { className: "text-xs opacity-80 truncate" }, d.nome)),
+        !fim && React.createElement("button", { onClick: mais, className: "px-3 py-2 rounded-xl bg-white/15 text-sm font-semibold transition active:scale-95" }, "+15 s"),
+        React.createElement("button", { onClick: pular, className: "px-3 py-2 rounded-xl bg-white/15 text-sm font-semibold transition active:scale-95" }, fim ? 'OK' : 'Pular'));
+}
 /* Exercício DENTRO de uma sessão (ativa ou do histórico): séries marcadas, PSE, dor, potência, mídia */
-function ExCard({ e, set, aluno, ant, best, lib }) {
+function ExCard({ e, set, aluno, ant, best, lib, descanso }) {
     const [open, setOpen] = useState(false), [tab, setTab] = useState('t');
     const vid = linkSeguro(e.midia) || linkSeguro(lib && lib.video), alerta = lib && String(lib.alerta || '').trim();
     const p = e.pot || {};
@@ -454,25 +981,37 @@ function ExCard({ e, set, aluno, ant, best, lib }) {
     const uni = uniOf(e.series);
     const rows = uni ? [['E', Math.min(+uni[1], 20)], ['D', Math.min(+uni[2], 20)]] : [['S', Math.min(n(e.series) | 0, 20)]];
     const done = e.done || {};
-    const tg = k => set({ done: { ...done, [k]: !done[k] } });
+    const tg = k => { const on = !done[k]; set({ done: { ...done, [k]: on } }); if (on) {
+        vib(12);
+        if (descanso)
+            descanso(e);
+    } };
+    const [bst, setBst] = useState(0), antRec = useRef(novoRec);
+    useEffect(() => { if (novoRec && !antRec.current) {
+        setBst(b => b + 1);
+        vib([40, 60, 40, 60, 90]);
+    } antRec.current = novoRec; }, [novoRec]);
+    const segInt = intervaloSeg(e.intervalo);
     const total = rows.reduce((x, r) => x + r[1], 0), feitas = nFeitas(e);
     const dor = e.dor || 0, pse = e.pse || 0;
     const resumo = [e.series && (uni ? e.series + ' (esq/dir)' : e.series + ' séries'), e.reps && (e.reps + ' reps'), e.intervalo && ('desc. ' + e.intervalo), e.carga, e.grp].filter(Boolean).join(' · ');
     return React.createElement(Card, { className: "!p-0 overflow-hidden border-2 !border-salvia shadow-md" },
-        React.createElement("button", { onClick: () => setOpen(!open), className: "w-full text-left p-4 flex items-center gap-3 bg-salvia/10" },
-            React.createElement("div", { className: "flex-1 min-w-0" },
-                React.createElement("p", { className: "font-semibold" }, e.nome),
-                React.createElement("p", { className: "text-xs text-suave mt-0.5" }, resumo || 'Toque para registrar')),
-            total > 0 && React.createElement("span", { className: "text-xs font-semibold text-petroleo bg-white rounded-full px-2 py-1" },
-                feitas,
-                "/",
-                total),
-            vid && React.createElement("span", { className: "text-azul text-sm", title: "Tem v\u00EDdeo" }, "\u25B6"),
-            React.createElement("span", { className: "text-lg" },
-                PSE_EMO[pse],
-                dor > 5 ? '⚠️' : '',
-                novoRec ? '🏆' : ''),
-            React.createElement("span", { className: 'text-suave transition-transform duration-300 ' + (open ? 'rotate-180' : '') }, "\u25BE")),
+        React.createElement("div", { className: "relative" },
+            bst > 0 && React.createElement(Burst, { key: bst }),
+            React.createElement("button", { onClick: () => setOpen(!open), className: "w-full text-left p-4 flex items-center gap-3 bg-salvia/10" },
+                React.createElement("div", { className: "flex-1 min-w-0" },
+                    React.createElement("p", { className: "font-semibold" }, e.nome),
+                    React.createElement("p", { className: "text-xs text-suave mt-0.5" }, resumo || 'Toque para registrar')),
+                total > 0 && React.createElement("span", { className: "text-xs font-semibold text-petroleo bg-white rounded-full px-2 py-1" },
+                    feitas,
+                    "/",
+                    total),
+                vid && React.createElement("span", { className: "text-azul text-sm", title: "Tem v\u00EDdeo" }, "\u25B6"),
+                React.createElement("span", { className: "text-lg" },
+                    PSE_EMO[pse],
+                    dor > 5 ? '⚠️' : '',
+                    novoRec ? '🏆' : ''),
+                React.createElement("span", { className: 'text-suave transition-transform duration-300 ' + (open ? 'rotate-180' : '') }, "\u25BE"))),
         React.createElement("div", { className: 'exp ' + (open ? 'on' : '') },
             React.createElement("div", null,
                 React.createElement("div", { className: "p-4 space-y-3 border-t-2 border-salvia/30" },
@@ -502,6 +1041,9 @@ function ExCard({ e, set, aluno, ant, best, lib }) {
                                     React.createElement("span", { className: "w-11 text-xs font-semibold text-suave" }, r === 'E' ? 'Esq.' : r === 'D' ? 'Dir.' : 'Séries'),
                                     React.createElement("div", { className: "flex flex-wrap gap-2" }, Array.from({ length: k }, (_, i) => { const kk = r + (i + 1), on = !!done[kk]; return React.createElement("button", { key: kk, onClick: () => tg(kk), className: 'w-11 h-11 rounded-xl border-2 font-bold transition active:scale-90 ' + (on ? 'bg-salvia border-salvia text-white pop' : 'bg-white border-borda text-suave') }, on ? '✓' : i + 1); })))),
                             uni && React.createElement("p", { className: "text-xs text-suave" }, "Unilateral: o 1\u00BA n\u00FAmero \u00E9 o lado esquerdo e o 2\u00BA, o direito."),
+                            descanso && React.createElement("button", { onClick: () => descanso(e, true), className: "w-full py-2.5 rounded-xl border border-salvia text-petroleo text-sm font-semibold transition active:scale-95" },
+                                "\u23F1 Iniciar descanso",
+                                segInt ? ' (' + mmss(segInt) + ')' : ''),
                             feitas > 0 && React.createElement("button", { onClick: () => set({ done: {} }), className: "text-xs text-suave underline" }, "Limpar marca\u00E7\u00F5es")),
                         React.createElement(Escala, { tit: "PSE (esfor\u00E7o)", v: pse, onChange: v => set({ pse: v }), cor: PSE_COR, emo: PSE_EMO, txt: PSE_TXT }),
                         React.createElement(Escala, { tit: "Dor neste exerc\u00EDcio", v: dor, onChange: v => set({ dor: v }), cor: DOR_COR, emo: DOR_EMO, txt: DOR_TXT, cls: "dor", nota: dor > 5 ? '⚠️ Acima de 5: chato/desconfortável. Vale rever carga ou execução.' : '✅ Até 5: zona segura/suportável.' })),
@@ -630,16 +1172,33 @@ function iniciarSessao(a, upd, k) {
 }
 function SessaoAtiva({ a, upd, aoConcluir, bib }) {
     const at = a.ativa, sess = a.sessoes || [];
-    const [fin, setFin] = useState(false);
+    const [fin, setFin] = useState(false), [desc, setDesc] = useState(null);
     const setAt = (id, patch) => upd({ ativa: { ...at, exs: at.exs.map(e => e.id === id ? { ...e, ...patch } : e) } });
+    const totSer = e => { const u = uniOf(e.series); return u ? Math.min(+u[1], 20) + Math.min(+u[2], 20) : Math.min(n(e.series) | 0, 20); };
+    const tot = at.exs.reduce((x, e) => x + totSer(e), 0), feitasAt = at.exs.reduce((x, e) => x + Math.min(nFeitas(e), totSer(e)), 0);
+    const iniciaDesc = (e, manual) => {
+        const m = lerMeta();
+        if (m.semTimer && !manual)
+            return;
+        const sg = intervaloSeg(e.intervalo) || (Number(m.descPadrao) || 0);
+        if (!sg)
+            return;
+        setDesc({ id: Date.now(), fim: Date.now() + sg * 1000, total: sg, nome: e.nome });
+    };
     const concluir = () => { upd({ sessoes: [{ id: 's' + Date.now(), data: new Date().toISOString(), k: at.k, titulo: at.titulo, exs: at.exs }, ...sess], ativa: null }); setFin(false); aoConcluir && aoConcluir(at); };
     return React.createElement("div", { className: "space-y-3" },
-        React.createElement(Card, { className: "!bg-salvia/10 border-salvia" },
-            React.createElement("p", { className: "font-display font-semibold text-petroleo" }, at.titulo),
-            React.createElement("p", { className: "text-xs text-suave" },
-                "Aula em andamento desde ",
-                fmt(at.inicio))),
-        at.exs.map(e => React.createElement(ExCard, { key: e.id, e: e, aluno: a, lib: bibDe(bib, e.nome), set: pt => setAt(e.id, pt), ant: ultimo(a, e.nome, null, null), best: melhor(a, e.nome, e.pot && e.pot.reps, null) })),
+        React.createElement(Card, { className: "!bg-salvia/10 border-salvia flex items-center gap-3" },
+            React.createElement("div", { className: "flex-1 min-w-0" },
+                React.createElement("p", { className: "font-display font-semibold text-petroleo" }, at.titulo),
+                React.createElement("p", { className: "text-xs text-suave" },
+                    "Aula em andamento desde ",
+                    fmt(at.inicio))),
+            tot > 0 && React.createElement(Anel, { v: feitasAt, max: tot, s: 52, w: 6, cor: "#48686E", trilho: "#fff" },
+                React.createElement("span", { className: "text-[11px] font-bold text-petroleo" },
+                    feitasAt,
+                    "/",
+                    tot))),
+        at.exs.map(e => React.createElement(ExCard, { key: e.id, e: e, aluno: a, lib: bibDe(bib, e.nome), descanso: iniciaDesc, set: pt => setAt(e.id, pt), ant: ultimo(a, e.nome, null, null), best: melhor(a, e.nome, e.pot && e.pot.reps, null) })),
         !fin ? React.createElement("button", { onClick: () => setFin(true), className: "w-full py-4 rounded-2xl bg-petroleo text-white font-bold text-lg transition active:scale-95" }, "\u2713 Concluir aula")
             : React.createElement(Card, { className: "space-y-2" },
                 React.createElement("p", { className: "font-semibold" }, "Concluir e salvar no hist\u00F3rico?"),
@@ -647,7 +1206,8 @@ function SessaoAtiva({ a, upd, aoConcluir, bib }) {
                 React.createElement("div", { className: "flex gap-2" },
                     React.createElement("button", { onClick: () => setFin(false), className: "flex-1 py-3 rounded-xl border border-borda bg-white" }, "Voltar"),
                     React.createElement("button", { onClick: concluir, className: "flex-1 py-3 rounded-xl bg-petroleo text-white font-semibold" }, "Concluir")),
-                React.createElement("button", { onClick: () => { upd({ ativa: null }); setFin(false); }, className: "w-full text-sm text-[#A9573A] pt-1" }, "Descartar aula sem salvar")));
+                React.createElement("button", { onClick: () => { upd({ ativa: null }); setFin(false); }, className: "w-full text-sm text-[#A9573A] pt-1" }, "Descartar aula sem salvar")),
+        desc && React.createElement(Descanso, { key: desc.id, d: desc, mais: () => setDesc(x => ({ ...x, fim: x.fim + 15000, total: x.total + 15 })), pular: () => setDesc(null) }));
 }
 function EscolherTreino({ a, upd }) {
     const tr = a.treinos || {}, keys = Object.keys(tr), ss = sessOrd(a);
@@ -2389,7 +2949,7 @@ function Detalhe({ a, upd, glob, voltar, editar, excluir, irFin }) {
         React.createElement("button", { onClick: voltar, className: "flex items-center gap-1 text-petroleo font-medium" },
             React.createElement(Ic, { d: P.back, s: 20 }),
             "Alunas"),
-        React.createElement("div", { className: "rounded-3xl bg-petroleo text-white p-5 flex items-center gap-4" },
+        React.createElement(Onda, { className: "p-5 flex items-center gap-4" },
             React.createElement(Avatar, { nome: a.nome, s: 60 }),
             React.createElement("div", { className: "min-w-0 flex-1" },
                 React.createElement("h2", { className: "font-display text-xl font-bold truncate" }, a.nome),
@@ -2890,10 +3450,34 @@ function App() {
     const [aba, setAba] = useState('inicio');
     const [sel, setSel] = useState(null);
     const [form, setForm] = useState(null); // null | 'nova' | 'editar'
+    const [erroSalvar, setErroSalvar] = useState(false);
     useEffect(() => { try {
         localStorage.setItem(KEY, JSON.stringify(dados));
+        setErroSalvar(false);
     }
-    catch (e) { } }, [dados]);
+    catch (e) {
+        setErroSalvar(true);
+    } }, [dados]);
+    const [pin, setPin] = useState(() => lerMeta().pin || null), [trav, setTrav] = useState(() => !!lerMeta().pin), [novaV, setNovaV] = useState(false);
+    const pinRef = useRef(pin);
+    pinRef.current = pin;
+    useEffect(() => { try {
+        if (navigator.storage && navigator.storage.persist) {
+            navigator.storage.persisted().then(p => p ? true : navigator.storage.persist()).then(r => salvaMeta({ persist: !!r })).catch(() => { });
+        }
+    }
+    catch (e) { } }, []);
+    useEffect(() => { let t = null; const f = () => { if (document.hidden) {
+        t = Date.now();
+    }
+    else {
+        const lim = window.__p50LockMs != null ? window.__p50LockMs : 120000;
+        if (t && pinRef.current && Date.now() - t > lim)
+            setTrav(true);
+        t = null;
+    } }; document.addEventListener('visibilitychange', f); return () => document.removeEventListener('visibilitychange', f); }, []);
+    useEffect(() => { const f = () => setNovaV(true); if (window.__p50Novo)
+        f(); window.addEventListener('p50-update', f); return () => window.removeEventListener('p50-update', f); }, []);
     const alunas = dados.alunas, cfg = cfgDe(dados), setCfg = c => setDados(d => ({ ...d, cfg: c }));
     const atual = alunas.find(a => a.id === sel);
     const upd = (id, patch) => setDados(d => ({ ...d, alunas: d.alunas.map(a => a.id === id ? { ...a, ...patch } : a) }));
@@ -2917,20 +3501,46 @@ function App() {
         setForm(null);
     };
     const tabs = [['inicio', 'Início', P.home], ['alunas', 'Alunas', P.users], ['cal', 'Calendário', P.cal], ['fin', 'Financeiro', P.money]];
-    return React.createElement("div", { className: "max-w-md mx-auto h-full flex flex-col bg-areia sm:shadow-2xl sm:border-x border-borda relative" },
-        React.createElement("main", { className: "flex-1 overflow-y-auto p-4" },
-            React.createElement("div", { key: aba + (sel || ''), className: "enter" },
-                aba === 'inicio' && React.createElement(Inicio, { alunas: alunas, abrir: abrir, irFin: () => { setAba('fin'); setSel(null); }, irCal: () => { setAba('cal'); setSel(null); }, backup: { dados, importar: d => { setDados(migrar(d)); setSel(null); } } }),
-                aba === 'alunas' && (atual
-                    ? React.createElement(Detalhe, { a: atual, glob: glob, upd: pt => upd(atual.id, pt), voltar: () => setSel(null), editar: () => setForm('editar'), irFin: () => { setAba('fin'); setSel(null); }, excluir: () => { setDados({ ...dados, alunas: alunas.filter(a => a.id !== atual.id) }); setSel(null); } })
-                    : React.createElement(Alunas, { alunas: alunas, abrir: setSel, nova: () => setForm('nova') })),
-                aba === 'cal' && React.createElement(Calendario, { alunas: alunas, upd: upd, abrir: abrir }),
-                aba === 'fin' && React.createElement(Financeiro, { alunas: alunas, upd: upd, cfg: cfg, setCfg: setCfg }))),
-        React.createElement("nav", { className: "grid grid-cols-4 bg-white border-t border-borda", style: { paddingBottom: 'env(safe-area-inset-bottom,0px)' } }, tabs.map(([k, t, d]) => React.createElement("button", { key: k, onClick: () => { setAba(k); if (k !== 'alunas')
-                setSel(null); }, className: 'flex flex-col items-center gap-1 py-2.5 text-xs font-medium transition active:scale-90 ' + (aba === k ? 'text-petroleo' : 'text-suave') },
-            React.createElement(Ic, { d: d }),
-            t))),
-        form && React.createElement(Form, { inicial: form === 'editar' ? atual : null, salvar: salvar, fechar: () => setForm(null) }));
+    const iAba = tabs.findIndex(t => t[0] === aba), nivel = iAba * 2 + (sel ? 1 : 0), nivAnt = useRef(nivel);
+    const dx = nivel > nivAnt.current ? 28 : nivel < nivAnt.current ? -28 : 0;
+    useEffect(() => { nivAnt.current = nivel; }, [nivel]);
+    return React.createElement(React.Fragment, null,
+        React.createElement("div", { inert: trav && pin ? 'true' : undefined, className: "max-w-md mx-auto h-full flex flex-col lg:flex-row lg:max-w-6xl bg-areia sm:shadow-2xl sm:border-x border-borda relative" },
+            React.createElement("div", { className: "flex-1 min-h-0 min-w-0 flex flex-col lg:order-2" },
+                erroSalvar && React.createElement("div", { className: "bg-[#FBE3DA] text-[#8F3F26] text-sm p-3 flex items-center gap-2", role: "alert" },
+                    React.createElement("span", { className: "flex-1" }, "\u26A0\uFE0F N\u00E3o consegui guardar as \u00FAltimas altera\u00E7\u00F5es neste aparelho (mem\u00F3ria cheia ou navega\u00E7\u00E3o privada). Salve um backup agora."),
+                    React.createElement("button", { onClick: () => fazerBackup(dados, false), className: "px-3 py-2 rounded-xl bg-petroleo text-white font-semibold text-xs" }, "Salvar backup")),
+                React.createElement("main", { className: "flex-1 overflow-y-auto p-4 lg:p-8" },
+                    React.createElement("div", { key: aba + (sel || ''), style: { '--dx': dx + 'px' }, className: "enter lg:max-w-3xl lg:mx-auto" },
+                        aba === 'inicio' && React.createElement(Inicio, { alunas: alunas, abrir: abrir, irFin: () => { setAba('fin'); setSel(null); }, irCal: () => { setAba('cal'); setSel(null); }, backup: { dados,
+                                importar: d => { const { _bk, ...r } = d; try {
+                                    localStorage.setItem(PREV, JSON.stringify({ em: new Date().toISOString(), dados }));
+                                }
+                                catch (e) { } setDados(migrar(r)); setSel(null); },
+                                desfazer: () => { const p = lerPrev(); if (!p || !p.dados)
+                                    return; try {
+                                    localStorage.setItem(PREV, JSON.stringify({ em: new Date().toISOString(), dados }));
+                                }
+                                catch (e) { } setDados(migrar(p.dados)); setSel(null); } }, seg: { pin, mudou: () => setPin(lerMeta().pin || null) } }),
+                        aba === 'alunas' && (atual
+                            ? React.createElement(Detalhe, { a: atual, glob: glob, upd: pt => upd(atual.id, pt), voltar: () => setSel(null), editar: () => setForm('editar'), irFin: () => { setAba('fin'); setSel(null); }, excluir: () => { setDados({ ...dados, alunas: alunas.filter(a => a.id !== atual.id) }); setSel(null); } })
+                            : React.createElement(Alunas, { alunas: alunas, abrir: setSel, nova: () => setForm('nova') })),
+                        aba === 'cal' && React.createElement(Calendario, { alunas: alunas, upd: upd, abrir: abrir }),
+                        aba === 'fin' && React.createElement(Financeiro, { alunas: alunas, upd: upd, cfg: cfg, setCfg: setCfg })))),
+            React.createElement("nav", { className: "relative grid grid-cols-4 bg-white border-t border-borda lg:order-1 lg:grid-cols-1 lg:content-start lg:w-60 lg:shrink-0 lg:border-t-0 lg:border-r lg:p-4 lg:gap-1", style: { paddingBottom: 'env(safe-area-inset-bottom,0px)' } },
+                React.createElement("span", { "aria-hidden": "true", className: "absolute top-0 left-0 h-[3px] w-1/4 px-5 lg:hidden transition-transform duration-300 ease-out", style: { transform: 'translateX(' + (iAba * 100) + '%)' } },
+                    React.createElement("span", { className: "block h-full rounded-b-full bg-petroleo" })),
+                React.createElement("div", { className: "hidden lg:block px-3 pt-2 pb-5" },
+                    React.createElement("p", { className: "font-display text-lg font-bold text-petroleo leading-tight" }, "Daniel Andreis"),
+                    React.createElement("p", { className: "text-xs tracking-widest text-suave mt-1" }, "PERSONAL 50+")),
+                tabs.map(([k, t, d]) => React.createElement("button", { key: k, onClick: () => { setAba(k); if (k !== 'alunas')
+                        setSel(null); }, "aria-current": aba === k ? 'page' : undefined, className: 'flex flex-col items-center gap-1 py-2.5 text-xs font-medium transition active:scale-90 lg:flex-row lg:gap-3 lg:px-4 lg:py-3 lg:text-sm lg:rounded-xl lg:active:scale-100 ' + (aba === k ? 'text-petroleo lg:bg-areia' : 'text-suave lg:hover:bg-areia/60') },
+                    React.createElement("span", { className: 'transition-transform duration-300 ' + (aba === k ? 'scale-110' : '') },
+                        React.createElement(Ic, { d: d })),
+                    t))),
+            form && React.createElement(Form, { inicial: form === 'editar' ? atual : null, salvar: salvar, fechar: () => setForm(null) }),
+            novaV && React.createElement(AvisoVersao, { fechar: () => setNovaV(false) })),
+        trav && pin && React.createElement(Trava, { pin: pin, ok: () => setTrav(false) }));
 }
 ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(App, null));
 
